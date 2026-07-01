@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     gcp_service_account_json: Optional[str] = None  # Path to service account JSON file
     pinecone_api_key: Optional[str] = None
 
+    # AWS configuration (used by S3 and Textract services)
+    aws_region: Optional[str] = None
+    aws_access_key_id: Optional[str] = None
+    aws_secret_access_key: Optional[str] = None
+    s3_bucket_name: Optional[str] = None
+
     # PostgreSQL connection string (set when postgresql feature is selected)
     postgres_connection_string: Optional[str] = None
 

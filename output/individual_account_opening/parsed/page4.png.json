@@ -1,0 +1,379 @@
+{
+  "pages": [
+    {
+      "page": 1,
+      "lines": [
+        "Sole/First Holder",
+        "Motilal Oswal Financial Services Limited motilal",
+        "CERSAI Know Your Client (KYC) Application Form (For Individuals Only) oswal",
+        "Application No. Wealth Management",
+        "Please fill the form in ENGL ISH and in BL OCK letters",
+        "Fields marked* are mandatory KYC ✗ No. ✗",
+        "(Mandatory for KYC update request)",
+        "Fields marked + are pertaining to CKYC and mandatory only if",
+        "Application Type*:",
+        "New ✓ KYC ✓ Modification ✗ KYC ✗",
+        "processing CKYC also Minor ✗",
+        "KYC Mode*: Please Tick ()",
+        "Normal ✓ EKYC ✗ OTP ✗",
+        "EKYC ✗ Biometric ✗ Digilocker ✗",
+        "Online ✓ KYC ✓ Offline ✓ EKYC ✓",
+        "1. Identity Details (please refer guidelines overleaf)",
+        "PAN* ECVPK1211E",
+        "Please Tick (Passport mandatory for NRis and Foreign Nationals PIO selection is only for CKYC and not for KRA",
+        "KYC. Select NRI or Foreign National based on Nationality of the individual)",
+        "Proof of Identity (POI) submitted for PAN exempted cases (Please tick)",
+        "2. Address Details* (please refer guidelines overleaf)",
+        "A. Correspondence/ Local Address*",
+        "Line 1\" SONI FALIYU",
+        "Line 2 MANDVI",
+        "Line3 SURAT",
+        "NOTE: For list, of two digit State/UT & list of ISO3166, kindly visit www.motilaloswal.com / Download Option",
+        "1 ACOP Individual Version 9.1"
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Name* (same as ID proof).",
+            "DEVILABEN. DINESHCHANDRA KAPADIYA",
+            ""
+          ],
+          "rows": [
+            [
+              "Maiden Name+ (if any)",
+              "",
+              ""
+            ],
+            [
+              "Fathers/Spouse's Name* Mother Name (Optional)",
+              "NATHUBHAI CHHOTALAL PASTAKIYA",
+              ""
+            ],
+            [
+              "Date of Birth*",
+              "07-12-1959",
+              ""
+            ],
+            [
+              "Gender*",
+              "Male Female Transgender 2D.",
+              ""
+            ],
+            [
+              "Marital Status*",
+              "Single Married",
+              ""
+            ],
+            [
+              "Nationality* Residential Status*",
+              "Indian Other Resident Individual Non Resident Indian Emair Foreign National Person of Indian Origin+",
+              "RAZINE fruglar"
+            ]
+          ]
+        },
+        {
+          "headers": [
+            "A Aadhaar Card XXXXXX1969",
+            ""
+          ],
+          "rows": [
+            [
+              "B Passport Number",
+              "(Expiry Date)"
+            ],
+            [
+              "C - - Voter ID Card",
+              ""
+            ],
+            [
+              "D - Driving License",
+              "(Expiry Date)"
+            ],
+            [
+              "E - NREGA Job Card",
+              ""
+            ],
+            [
+              "F NPR",
+              ""
+            ],
+            [
+              "G - EKYC Authentication",
+              ""
+            ],
+            [
+              "H Offline verification of Aadhar",
+              ""
+            ],
+            [
+              "Z - Others",
+              "(any document notified by Central Government)"
+            ],
+            [
+              "Identification Number",
+              ""
+            ],
+            [
+              "",
+              ""
+            ]
+          ]
+        },
+        {
+          "headers": [
+            "City/Town/Village* SURAT District*",
+            "SURAT",
+            "Pin Code* 394160"
+          ],
+          "rows": [
+            [
+              "State / U.T Code* SURAT/GUJARATE Country*",
+              "INDIA",
+              "ISO-3166 Code"
+            ],
+            [
+              "Address Type* Residential/Business Residential",
+              "Business",
+              "Registered Office Unspecified"
+            ]
+          ]
+        }
+      ],
+      "selections": [
+        {
+          "options": [
+            {
+              "text": "KYC No.",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "New KYC",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Modification KYC",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Minor",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Normal",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "EKYC OTP",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Digilocker",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Online KYC",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "EKYC Biometric",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Offline EKYC",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Female",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Transgender",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Male",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Married",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Single",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Other",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Indian",
+              "selected": true
+            },
+            {
+              "text": "Resident Individual",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Non Resident Indian",
+              "selected": false
+            },
+            {
+              "text": "Person of Indian Origin+",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Foreign National",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "A Aadhaar Card XXXXXX1969",
+              "selected": true
+            },
+            {
+              "text": "C - - Voter ID Card",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "F NPR",
+              "selected": false
+            },
+            {
+              "text": "G - EKYC Authentication",
+              "selected": false
+            },
+            {
+              "text": "H Offline verification of Aadhar",
+              "selected": false
+            },
+            {
+              "text": "Z - Others (any document notified by Central Government)",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Residential",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Residential/Business",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Unspecified",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Registered Office",
+              "selected": false
+            }
+          ]
+        },
+        {
+          "options": [
+            {
+              "text": "Business",
+              "selected": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_count": 1
+}

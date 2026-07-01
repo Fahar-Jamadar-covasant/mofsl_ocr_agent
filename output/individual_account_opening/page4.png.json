@@ -1,0 +1,97 @@
+{
+  "form_details": {
+    "form_number": null,
+    "application_number": null,
+    "kyc_number": null,
+    "application_type": "New",
+    "kyc_mode": "Normal, Online KYC, Offline EKYC",
+    "dp_type": null,
+    "branch_code": null,
+    "branch_prefix": null,
+    "sub_broker_code": null,
+    "ucc_code": null,
+    "client_code": null,
+    "dp_internal_reference_number": null,
+    "cdsl_dp_id": null,
+    "nsdl_dp_id": null
+  },
+  "personal_details": {
+    "first_name": "DEVILABEN.",
+    "middle_name": "DINESHCHANDRA",
+    "last_name": "KAPADIYA",
+    "maiden_name": null,
+    "father_spouse_name": "NATHUBHAI CHHOTALAL PASTAKIYA",
+    "mother_name": null,
+    "date_of_birth": "07-12-1959",
+    "gender": "Female",
+    "marital_status": "Married",
+    "nationality": "Indian",
+    "residential_status": "Resident Individual",
+    "pan_number": "ECVPK1211E",
+    "photo_present": null,
+    "signature_present": null
+  },
+  "identity_proof": {
+    "document_type": "Aadhaar Card",
+    "document_number": "XXXXXX1969",
+    "expiry_date": null
+  },
+  "correspondence_address": {
+    "address_line_1": "SONI FALIYU",
+    "address_line_2": "MANDVI",
+    "address_line_3": "SURAT",
+    "city": "SURAT",
+    "district": "SURAT",
+    "state": "SURAT/GUJARATE",
+    "country": "INDIA",
+    "pin_code": "394160",
+    "address_type": "Residential"
+  },
+  "permanent_address": {
+    "address_line_1": null,
+    "address_line_2": null,
+    "address_line_3": null,
+    "city": null,
+    "district": null,
+    "state": null,
+    "country": null,
+    "pin_code": null,
+    "address_type": null,
+    "same_as_correspondence": null
+  },
+  "contact_details": {
+    "email_id": null,
+    "mobile_number": null,
+    "residential_telephone": null,
+    "office_telephone": null
+  },
+  "bank_details": [],
+  "financial_information": {
+    "occupation": null,
+    "annual_income": null,
+    "net_worth": null,
+    "net_worth_date": null,
+    "politically_exposed_person": null,
+    "related_to_politically_exposed_person": null
+  },
+  "depository_details": {
+    "account_type": null,
+    "first_holder_dp_id": null,
+    "first_holder_client_id": null,
+    "second_holder_dp_id": null,
+    "second_holder_client_id": null,
+    "third_holder_dp_id": null,
+    "third_holder_client_id": null
+  },
+  "trading_preferences": {
+    "trading_segments": [],
+    "brokerage_preferences": [],
+    "contract_note_mode": null,
+    "bill_mode": null,
+    "statement_frequency": null
+  },
+  "gst_details": {
+    "gst_number": null,
+    "state_of_supply": null
+  }
+}

@@ -160,7 +160,14 @@ class CAMSConfigAdapter:
                     "model": llm_config.get("model", "gpt-4o"),
                     "temperature": llm_config.get("temperature", 0.3),
                     "max_tokens": int(llm_config.get("max_tokens", 4096))
-                }
+                },
+                # Used by StructuredExtractionNode (OCR pipeline)
+                "extraction": {
+                    "provider": llm_provider,
+                    "model": llm_config.get("model", "gpt-4o"),
+                    "temperature": 0.1,
+                    "max_tokens": int(llm_config.get("max_tokens", 4096))
+                },
             },
 
             # Pass through additional config

@@ -158,6 +158,14 @@ async def main():
     agent_card = create_agent_card()
     executor = AgentExecutor()
 
+    # Create OCR database tables if PostgreSQL is configured
+    if settings.postgres_connection_string:
+        try:
+            from src.ocr.storage.database import create_tables
+            await create_tables()
+        except Exception as _db_err:
+            logger.warning(f"OCR table creation skipped: {_db_err}")
+
     task_store = InMemoryTaskStore()
     request_handler = DefaultRequestHandler(
         agent_executor=executor,
@@ -267,9 +275,17 @@ async def main():
     @app.post("/agent/run")
     async def agent_run_endpoint(http_request: Request, body: dict = Body(...)):
         """
-        Direct agent execution endpoint.
+        Direct agent execution endpoint — supports both the OCR Agent and the
+        generic query agent.
 
-        Request format:
+        OCR request format (identified by the presence of "document"):
+        {
+            "document": "<s3-key or identifier>",
+            "process_type": "individual_account_opening",
+            "conversation_id": "optional-thread-id"
+        }
+
+        Generic query format (fallback):
         {
             "query": "Your question here",
             "conversation_id": "optional-conversation-id"
@@ -277,28 +293,101 @@ async def main():
 
         Response format:
         {
-            "response": "Agent's answer",
+            "response": { ...OCRResponse... } | "<text answer>",
             "instance_id": "...",
             "conversation_id": "...",
             "user_id": "..."
         }
+
+        HTTP status codes:
+            200 — successful execution
+            400 — invalid request (bad document, unknown process_type, missing query)
+            500 — unexpected internal error
         """
+        import uuid
+        from fastapi.responses import JSONResponse
+        from pydantic import ValidationError
+        from src.ocr.models.ocr_request import OCRRequest
+
+        # Read runtime context from config (injected at scaffold time from JWT)
+        tenant_id = _read_agent_config_field("tenant_id", default="default")
+        user_id = _read_agent_config_field("user_id", default="")
+        instance_id = _read_agent_config_field("instance_id", default="N/A")
+
+        thread_id = body.get("conversation_id") or f"thread_{uuid.uuid4().hex[:16]}"
+
+        # ── OCR path — detected by presence of "document" field ──────────────
+        if "document" in body:
+            # Step 1: validate the request before touching any AWS service
+            try:
+                ocr_request = OCRRequest(
+                    document=body.get("document", ""),
+                    process_type=body.get("process_type", ""),
+                    conversation_id=thread_id,
+                )
+            except ValidationError as exc:
+                errors = [
+                    {"field": e["loc"][-1], "message": e["msg"]}
+                    for e in exc.errors()
+                ]
+                logger.warning(f"OCR request validation failed: {errors}")
+                return JSONResponse(
+                    status_code=400,
+                    content={"error": "Invalid OCR request", "details": errors},
+                )
+
+            logger.info(
+                f"OCR request received — process_type={ocr_request.process_type!r}, "
+                f"conversation_id={thread_id}"
+            )
+
+            # Step 2: execute the graph
+            try:
+                ocr_response = await executor._run_ocr_graph(
+                    ocr_request, tenant_id, thread_id
+                )
+            except Exception as exc:
+                logger.error(f"OCR graph error: {type(exc).__name__}: {exc}")
+                return JSONResponse(
+                    status_code=500,
+                    content={
+                        "error": "OCR processing failed",
+                        "detail": str(exc),
+                        "conversation_id": thread_id,
+                    },
+                )
+
+            # Step 3: validate and return the response
+            logger.info(
+                f"OCR response returned — success={ocr_response.success}, "
+                f"conversation_id={thread_id}"
+            )
+
+            return JSONResponse(
+                status_code=200,
+                content={
+                    "response": ocr_response.model_dump(),
+                    "instance_id": instance_id,
+                    "conversation_id": thread_id,
+                    "user_id": user_id,
+                },
+            )
+
+        # ── Generic query path (original behaviour) ───────────────────────────
         try:
-            import uuid
             from langchain_core.messages import HumanMessage
 
             query = body.get("query", "")
-            if not query:
-                return {"error": "Query is required"}
+            if not query or not query.strip():
+                return JSONResponse(
+                    status_code=400,
+                    content={"error": "Either 'document' (OCR request) or 'query' is required"},
+                )
 
-            # Read runtime context from config (injected at scaffold time from JWT)
-            tenant_id = _read_agent_config_field("tenant_id", default="default")
-            user_id = _read_agent_config_field("user_id", default="")
-            instance_id = _read_agent_config_field("instance_id", default="N/A")
-
-            thread_id = body.get("conversation_id") or f"thread_{uuid.uuid4().hex[:16]}"
-
-            logger.info(f"Agent request received: query_length={len(query)}, conversation_id={thread_id}")
+            logger.info(
+                f"Agent request received — query_length={len(query)}, "
+                f"conversation_id={thread_id}"
+            )
 
             trace_id = uuid.uuid4().hex
             parent_span_id = uuid.uuid4().hex[:16]
@@ -319,18 +408,27 @@ async def main():
             final_state = await executor._run_graph(initial_state, tenant_id, thread_id)
             response_text = final_state.get("final_response", "No response generated")
 
-            logger.info(f"Agent response generated: response_length={len(response_text)}, conversation_id={thread_id}")
+            logger.info(
+                f"Agent response generated — response_length={len(response_text)}, "
+                f"conversation_id={thread_id}"
+            )
 
-            return {
-                "response": response_text,
-                "instance_id": instance_id,
-                "conversation_id": thread_id,
-                "user_id": user_id,
-            }
+            return JSONResponse(
+                status_code=200,
+                content={
+                    "response": response_text,
+                    "instance_id": instance_id,
+                    "conversation_id": thread_id,
+                    "user_id": user_id,
+                },
+            )
 
-        except Exception as e:
-            logger.error(f"Agent error: {str(e)}")
-            return {"error": str(e)}
+        except Exception as exc:
+            logger.error(f"Agent error: {type(exc).__name__}: {exc}")
+            return JSONResponse(
+                status_code=500,
+                content={"error": "Agent processing failed", "detail": str(exc)},
+            )
 
     config = uvicorn.Config(
         app,
@@ -349,6 +447,11 @@ async def main():
 
 
 if __name__ == "__main__":
+    import platform
+    if platform.system() == "Windows":
+        # psycopg (and other async libs) are incompatible with Windows ProactorEventLoop.
+        # SelectorEventLoop works on all platforms and is required for psycopg async.
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     try:
         asyncio.run(main())
     except KeyboardInterrupt:

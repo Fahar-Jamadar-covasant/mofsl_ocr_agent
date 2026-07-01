@@ -26,6 +26,10 @@ from .nodes import QueryProcessorNode, ContextRetrieverNode, ResponseGeneratorNo
 from src.tools import get_available_tools
 from src.config.agent_config import load_agent_config, get_secrets
 from src.config.settings import settings
+from src.ocr.graph.workflow import build_ocr_graph
+from src.ocr.models.ocr_request import OCRRequest
+from src.ocr.models.ocr_response import OCRResponse
+from src.ocr.models.ocr_state import OCRState
 from cams_otel_lib import Logger as logger, otel_trace
 from langgraph.checkpoint.memory import MemorySaver
 
@@ -99,10 +103,13 @@ class AgentExecutor(A2AAgentExecutor):
 
         # Compiled graph cache — keyed by tenant_id to avoid rebuilding LLM clients per request
         self._compiled_graphs: Dict[str, Any] = {}
+        # Separate cache for the OCR graph so it compiles independently of the main agent graph
+        self._ocr_compiled_graphs: Dict[str, Any] = {}
         self._graph_cache_lock = asyncio.Lock()
 
         self._postgres_conn_string = None
         self._pg_checkpointer = None
+        self._pg_cm = None          # holds the open async context manager for cleanup
         self._pg_init_lock = asyncio.Lock()
         if POSTGRES_AVAILABLE and AsyncPostgresSaver is not None:
             db_conn_str = (
@@ -271,14 +278,26 @@ class AgentExecutor(A2AAgentExecutor):
 
     # FEATURE:postgresql
     async def _get_pg_checkpointer(self):
-        """Lazily initialise and cache the PostgreSQL checkpointer (opened once, reused)."""
+        """Lazily initialise and cache the PostgreSQL checkpointer (opened once, reused).
+
+        AsyncPostgresSaver.from_conn_string() is an async context manager.
+        We enter it once, call setup(), and keep the connection open for the
+        lifetime of the process by storing the cm in self._pg_cm.
+        """
         if self._pg_checkpointer is not None:
             return self._pg_checkpointer
         async with self._pg_init_lock:
             if self._pg_checkpointer is None:
-                pg_checkpointer = AsyncPostgresSaver.from_conn_string(self._postgres_conn_string)
-                await pg_checkpointer.setup()
-                self._pg_checkpointer = pg_checkpointer
+                # AsyncPostgresSaver expects a plain psycopg URI (postgresql://...)
+                # not the SQLAlchemy driver form (postgresql+psycopg://...).
+                psycopg_conn_str = self._postgres_conn_string.replace(
+                    "postgresql+psycopg://", "postgresql://"
+                )
+                cm = AsyncPostgresSaver.from_conn_string(psycopg_conn_str)
+                checkpointer = await cm.__aenter__()
+                await checkpointer.setup()
+                self._pg_cm = cm
+                self._pg_checkpointer = checkpointer
         return self._pg_checkpointer
 
     @otel_trace
@@ -330,6 +349,121 @@ class AgentExecutor(A2AAgentExecutor):
                     break
 
         return final_state
+
+    @otel_trace
+    async def _run_ocr_graph(
+        self, ocr_request: OCRRequest, tenant_id: str, thread_id: str
+    ) -> OCRResponse:
+        """
+        Compile (once) and run the OCR LangGraph workflow.
+
+        Reuses the same checkpointer strategy as the main agent graph:
+        MemorySaver by default, AsyncPostgresSaver when configured.
+        The graph is compiled once per tenant and cached.
+        """
+        # Reuse the shared MCP initialisation lock so tools load exactly once
+        if not self._mcp_initialized:
+            async with self._mcp_init_lock:
+                if not self._mcp_initialized:
+                    try:
+                        from src.tools.mcp_loader import load_mcp_tools
+                        mcp_tools = await load_mcp_tools()
+                        if mcp_tools:
+                            self.tools = self.tools + mcp_tools
+                            logger.info(f"Added {len(mcp_tools)} MCP tools. Total: {len(self.tools)}")
+                    except Exception as _mcp_err:
+                        logger.warning(f"MCP tool init skipped: {_mcp_err}")
+                    self._mcp_initialized = True
+
+        tenant_config = self.config.get("default", {})
+        # OCR pipeline has 8 sequential nodes; give it a dedicated limit so the
+        # main agent's max_steps (typically tuned for tool-call loops) doesn't
+        # starve or prematurely abort the OCR workflow.
+        ocr_max_steps = tenant_config.get("ocr_max_steps", max(25, tenant_config.get("max_steps", 10)))
+        run_config = {
+            "configurable": {"thread_id": thread_id},
+            "recursion_limit": ocr_max_steps,
+        }
+
+        if tenant_id not in self._ocr_compiled_graphs:
+            async with self._graph_cache_lock:
+                if tenant_id not in self._ocr_compiled_graphs:
+                    graph = build_ocr_graph(self.config, tenant_id)
+                    checkpointer = self._checkpointer
+                    if POSTGRES_AVAILABLE and self._postgres_conn_string:
+                        checkpointer = await self._get_pg_checkpointer()
+                    self._ocr_compiled_graphs[tenant_id] = graph.compile(
+                        checkpointer=checkpointer
+                    )
+                    logger.info(f"OCR graph compiled and cached for tenant={tenant_id}")
+
+        compiled_graph = self._ocr_compiled_graphs[tenant_id]
+
+        initial_state: OCRState = {
+            # Input
+            "request": ocr_request,
+            "process_type": ocr_request.process_type,
+            "document": ocr_request.document,
+            # S3
+            "s3_object_key": None,
+            # Textract
+            "textract_job_id": None,
+            "raw_textract_response": None,
+            # Parsing
+            "parsed_document": None,
+            # Process
+            "process": None,
+            # Extraction
+            "extracted_data": None,
+            # Storage
+            "parsed_json_path": None,
+            "ocr_job_id": None,
+            # Output
+            "response": None,
+            # Lifecycle
+            "metadata": {},
+            "status": "pending",
+            "error": None,
+            # Framework
+            "tenant_id": tenant_id,
+            "thread_id": thread_id,
+        }
+
+        from src.ocr.utils.ocr_logger import pipeline_start, pipeline_done
+
+        pipeline_timer = pipeline_start(
+            document=ocr_request.document,
+            process_type=ocr_request.process_type,
+        )
+
+        logger.info(
+            f"Running OCR graph: process_type={ocr_request.process_type}, "
+            f"tenant_id={tenant_id}, thread_id={thread_id}"
+        )
+
+        final_state = await compiled_graph.ainvoke(initial_state, run_config)
+
+        ocr_response: Optional[OCRResponse] = final_state.get("response")
+        if not ocr_response:
+            logger.warning("OCR graph produced no ocr_response — returning failure stub")
+            ocr_response = OCRResponse(
+                success=False,
+                process_type=ocr_request.process_type,
+                extracted_data={},
+                metadata={"error": "No response produced by workflow"},
+            )
+
+        pipeline_done(
+            success=ocr_response.success,
+            elapsed=pipeline_timer.elapsed(),
+            parsed_json_path=ocr_response.metadata.get("parsed_json_path", ""),
+        )
+
+        logger.info(
+            f"OCR graph completed: success={ocr_response.success}, "
+            f"process_type={ocr_response.process_type}"
+        )
+        return ocr_response
 
     @otel_trace
     async def _stream_response(self, response: str, event_queue: EventQueue) -> None:
