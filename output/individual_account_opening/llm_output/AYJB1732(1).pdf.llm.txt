@@ -1,0 +1,109 @@
+```json
+{
+  "form_details": {
+    "form_number": "71426964",
+    "application_number": "CKCF0111264135",
+    "kyc_number": null,
+    "application_type": "New",
+    "kyc_mode": "Normal",
+    "dp_type": "CDSL",
+    "branch_code": null,
+    "branch_prefix": null,
+    "sub_broker_code": null,
+    "ucc_code": "AYJB1732",
+    "client_code": "AVJB1732",
+    "dp_internal_reference_number": "0048917812",
+    "cdsl_dp_id": "120109",
+    "nsdl_dp_id": "IN301862"
+  },
+  "personal_details": {
+    "first_name": "Nikhil",
+    "middle_name": "Rajesh",
+    "last_name": "Bajaj",
+    "maiden_name": null,
+    "father_spouse_name": "RAJESH BAJAJ",
+    "mother_name": null,
+    "date_of_birth": "05/02/1997",
+    "gender": "Male",
+    "marital_status": "Single",
+    "nationality": "Indian",
+    "residential_status": "Resident Individual",
+    "pan_number": "CGPPB0236C",
+    "photo_present": true,
+    "signature_present": true
+  },
+  "identity_proof": {
+    "proof_type": "Aadhaar Card",
+    "identification_number": null,
+    "passport_number": null,
+    "passport_expiry_date": null,
+    "driving_license_number": null,
+    "driving_license_expiry_date": null,
+    "voter_id_number": null,
+    "aadhaar_number": "XXXXXX6740",
+    "aadhaar_offline_verification": null,
+    "ekyc_authentication": null,
+    "nrega_job_card_number": null,
+    "npr_number": null,
+    "other_document_type": null,
+    "other_document_number": null
+  },
+  "correspondence_address": {
+    "address_line_1": "s/o Rajesh Bajaj, R-1 - 616, Bandhakam bhavan,",
+    "address_line_2": "near Saibaba mandir, datta krupa society, Latur",
+    "address_line_3": null,
+    "city": "Latur",
+    "district": "Latur",
+    "state": "MAHARASHTRA",
+    "country": "India",
+    "pin_code": "413512",
+    "address_type": "Residential"
+  },
+  "permanent_address": {
+    "address_line_1": null,
+    "address_line_2": null,
+    "address_line_3": null,
+    "city": null,
+    "district": null,
+    "state": null,
+    "country": null,
+    "pin_code": null,
+    "address_type": "Residential",
+    "same_as_correspondence": true
+  },
+  "contact_details": {
+    "email": "nikhil19bajaj97@gmail.com",
+    "mobile_number": "9130998333",
+    "office_phone": null,
+    "residence_phone": null
+  },
+  "bank_details": {
+    "bank_name": "STATE BANK OF INDIA",
+    "branch_name": "AUSA ROAD LATUR",
+    "branch_address": "SHREYASKHARDEKARBUILDINGAUSA",
+    "account_number": "35568512651",
+    "account_type": "Savings",
+    "micr_code": "413002972",
+    "ifsc_code": "SBIN0006303",
+    "internet_banking_enabled": true,
+    "proof_of_bank": "Cancelled Cheque (with client name and A/c no. printed)"
+  },
+  "financial_information": {
+    "gross_annual_income": "5-10 Lac",
+    "net_worth": null,
+    "net_worth_date": null,
+    "occupation": "Business",
+    "other_income_source": null,
+    "pep_status": false,
+    "related_to_pep": false,
+    "other_information": "-"
+  },
+  "depository_details": {
+    "depository_name": "CDSL",
+    "dp_id": "12010900",
+    "beneficiary_id": "48917812",
+    "beneficiary_name": "Nikhil Rajesh bajaj",
+    "second_holder_name": null,
+    "third_holder_name": null,
+    "proof_of_dp": null
+  

@@ -1,136 +1,68 @@
-2026-07-01 16:17:15  [OCR] INFO      OCR log file: C:\Users\Fahar Jamadar\mosfl\mofsl_ocr_agent\mofsl_ocr_agent\logs\ocr_pipeline.log
-2026-07-01 16:17:20  [OCR] INFO      ======================================================================
-2026-07-01 16:17:20  [OCR] INFO        OCR PIPELINE START
-2026-07-01 16:17:20  [OCR] INFO        document     : C:/Users/Fahar Jamadar/Downloads/page4.png
-2026-07-01 16:17:20  [OCR] INFO        process_type : individual_account_opening
-2026-07-01 16:17:20  [OCR] INFO      ======================================================================
-2026-07-01 16:17:20  [OCR] INFO      ▶  ValidateRequest                 START   document='C:/Users/Fahar Jamadar/Downloads/page4.png'  process_type='individual_account_opening'
-2026-07-01 16:17:20  [OCR] INFO      ✔  ValidateRequest                 DONE   [0ms]  process_type='individual_account_opening'
-2026-07-01 16:17:20  [OCR] INFO      ▶  UploadToS3                      START   document='C:/Users/Fahar Jamadar/Downloads/page4.png'  bucket='mofsl-dev'
-2026-07-01 16:17:21  [OCR] INFO      ✔  UploadToS3                      DONE   [1.49s]  s3_object_key='page4.png'
-2026-07-01 16:17:21  [OCR] INFO      ▶  RunTextract                     START   s3_object_key='page4.png'
-2026-07-01 16:17:36  [OCR] INFO      ✔  RunTextract                     DONE   [14.17s]  job_id='b44b0ee401395afb7219fce01f4971084ebf7034967229b815b51a231ecbc3d7'  blocks=605
-2026-07-01 16:17:36  [OCR] INFO      ▶  ParseOCRDocument                START   job_id='b44b0ee401395afb7219fce01f4971084ebf7034967229b815b51a231ecbc3d7'  blocks=605
-2026-07-01 16:17:36  [OCR] INFO      ✔  ParseOCRDocument                DONE   [42ms]  pages=1
-2026-07-01 16:17:36  [OCR] INFO      ▶  ResolveProcess                  START   process_type='individual_account_opening'
-2026-07-01 16:17:36  [OCR] INFO      ✔  ResolveProcess                  DONE   [0ms]  resolved='IndividualAccountOpeningProcess'
-2026-07-01 16:17:36  [OCR] INFO      ▶  StructuredExtraction            START   process_type='individual_account_opening'  pages_total=1  pages_sent=1  model='gemini/gemini-2.5-pro'  provider='openai'
-2026-07-01 16:17:36  [OCR] WARNING   ⚠  StructuredExtraction            WARN    parsed document saved → C:\Users\Fahar Jamadar\mosfl\mofsl_ocr_agent\mofsl_ocr_agent\output\individual_account_opening\parsed\page4.png.json
-2026-07-01 16:17:36  [OCR] WARNING   ⚠  StructuredExtraction            WARN    payload size: system=11,674 chars  user=4,267 chars  total=15,941 chars
-2026-07-01 16:18:07  [OCR] WARNING   ⚠  StructuredExtraction            WARN    LLM response received: 2,618 chars
-2026-07-01 16:18:07  [OCR] WARNING   ⚠  StructuredExtraction            WARN    LLM raw response:
-```json
-{
-  "form_details": {
-    "form_number": null,
-    "application_number": null,
-    "kyc_number": null,
-    "application_type": "New",
-    "kyc_mode": "Normal, Online KYC, Offline EKYC",
-    "dp_type": null,
-    "branch_code": null,
-    "branch_prefix": null,
-    "sub_broker_code": null,
-    "ucc_code": null,
-    "client_code": null,
-    "dp_internal_reference_number": null,
-    "cdsl_dp_id": null,
-    "nsdl_dp_id": null
-  },
-  "personal_details": {
-    "first_name": "DEVILABEN.",
-    "middle_name": "DINESHCHANDRA",
-    "last_name": "KAPADIYA",
-    "maiden_name": null,
-    "father_spouse_name": "NATHUBHAI CHHOTALAL PASTAKIYA",
-    "mother_name": null,
-    "date_of_birth": "07-12-1959",
-    "gender": "Female",
-    "marital_status": "Married",
-    "nationality": "Indian",
-    "residential_status": "Resident Individual",
-    "pan_number": "ECVPK1211E",
-    "photo_present": null,
-    "signature_present": null
-  },
-  "identity_proof": {
-    "document_type": "Aadhaar Card",
-    "document_number": "XXXXXX1969",
-    "expiry_date": null
-  },
-  "correspondence_address": {
-    "address_line_1": "SONI FALIYU",
-    "address_line_2": "MANDVI",
-    "address_line_3": "SURAT",
-    "city": "SURAT",
-    "district": "SURAT",
-    "state": "SURAT/GUJARATE",
-    "country": "INDIA",
-    "pin_code": "394160",
-    "address_type": "Residential"
-  },
-  "permanent_address": {
-    "address_line_1": null,
-    "address_line_2": null,
-    "address_line_3": null,
-    "city": null,
-    "district": null,
-    "state": null,
-    "country": null,
-    "pin_code": null,
-    "address_type": null,
-    "same_as_correspondence": null
-  },
-  "contact_details": {
-    "email_id": null,
-    "mobile_number": null,
-    "residential_telephone": null,
-    "office_telephone": null
-  },
-  "bank_details": [],
-  "financial_information": {
-    "occupation": null,
-    "annual_income": null,
-    "net_worth": null,
-    "net_worth_date": null,
-    "politically_exposed_person": null,
-    "related_to_politically_exposed_person": null
-  },
-  "depository_details": {
-    "account_type": null,
-    "first_holder_dp_id": null,
-    "first_holder_client_id": null,
-    "second_holder_dp_id": null,
-    "second_holder_client_id": null,
-    "third_holder_dp_id": null,
-    "third_holder_client_id": null
-  },
-  "trading_preferences": {
-    "trading_segments": [],
-    "brokerage_preferences": [],
-    "contract_note_mode": null,
-    "bill_mode": null,
-    "statement_frequency": null
-  },
-  "gst_details": {
-    "gst_number": null,
-    "state_of_supply": null
-  },
-  "money_laundering_information": {
-    "involvement_in_money_laundering": null
-  
-2026-07-01 16:18:07  [OCR] WARNING   ⚠  StructuredExtraction            WARN    json.loads failed (Expecting ',' delimiter: line 96 column 4 (char 2526)) — attempting json_repair
-2026-07-01 16:18:07  [OCR] WARNING   ⚠  StructuredExtraction            WARN    json_repair succeeded
-2026-07-01 16:18:07  [OCR] WARNING   ⚠  StructuredExtraction            WARN    Pydantic validation error (returning raw dict): 1 validation error for IndividualAccountOpeningData
-bank_details
-  Input should be a valid dictionary or instance of BankDetails [type=model_type, input_value=[], input_type=list]
-    For further information visit https://errors.pydantic.dev/2.13/v/model_type
-2026-07-01 16:18:07  [OCR] INFO      ✔  StructuredExtraction            DONE   [30.96s]  keys=['form_details', 'personal_details', 'identity_proof', 'correspondence_address', 'permanent_address', 'contact_details', 'bank_details', 'financial_information', 'depository_details', 'trading_preferences', 'gst_details']
-2026-07-01 16:18:07  [OCR] INFO      ▶  StoreParsedJson                 START   process_type='individual_account_opening'  document='C:/Users/Fahar Jamadar/Downloads/page4.png'
-2026-07-01 16:18:07  [OCR] INFO      ✔  StoreParsedJson                 DONE   [195ms]  path='C:\\Users\\Fahar Jamadar\\mosfl\\mofsl_ocr_agent\\mofsl_ocr_agent\\output\\individual_account_opening\\page4.png.json'  job_id=11
-2026-07-01 16:18:07  [OCR] INFO      ▶  ReturnStructuredOutput          START   process_type='individual_account_opening'  success=True
-2026-07-01 16:18:07  [OCR] INFO      ✔  ReturnStructuredOutput          DONE   [0ms]  success=True  fields=11
-2026-07-01 16:18:07  [OCR] INFO      ======================================================================
-2026-07-01 16:18:07  [OCR] INFO        OCR PIPELINE SUCCESS   total_time=46.92s
-2026-07-01 16:18:07  [OCR] INFO        output       : C:\Users\Fahar Jamadar\mosfl\mofsl_ocr_agent\mofsl_ocr_agent\output\individual_account_opening\page4.png.json
-2026-07-01 16:18:07  [OCR] INFO      ======================================================================
+2026-07-01 18:57:44  [OCR] INFO      OCR log file: C:\Users\Fahar Jamadar\mosfl\mofsl_ocr_agent\mofsl_ocr_agent\logs\ocr_pipeline.log
+2026-07-01 18:57:59  [OCR] INFO      ======================================================================
+2026-07-01 18:57:59  [OCR] INFO        OCR PIPELINE START
+2026-07-01 18:57:59  [OCR] INFO        document     : C:/Users/Fahar Jamadar/Downloads/page4.png
+2026-07-01 18:57:59  [OCR] INFO        process_type : individual_account_opening
+2026-07-01 18:57:59  [OCR] INFO      ======================================================================
+2026-07-01 18:57:59  [OCR] INFO      ▶  ValidateRequest                 START   document='C:/Users/Fahar Jamadar/Downloads/page4.png'  process_type='individual_account_opening'
+2026-07-01 18:57:59  [OCR] INFO      ✔  ValidateRequest                 DONE   [0ms]  process_type='individual_account_opening'
+2026-07-01 18:57:59  [OCR] INFO      ▶  UploadToS3                      START   document='C:/Users/Fahar Jamadar/Downloads/page4.png'  bucket='mofsl-dev'
+2026-07-01 18:58:00  [OCR] INFO      ✔  UploadToS3                      DONE   [1.02s]  s3_object_key='page4.png'
+2026-07-01 18:58:00  [OCR] INFO      ▶  RunTextract                     START   s3_object_key='page4.png'
+2026-07-01 18:58:07  [OCR] INFO      ✔  RunTextract                     DONE   [6.77s]  job_id='46111f31c5a7a0201d15d0ef3ac879bd91dcfdb557d88ca0af07381aaefd2601'  blocks=605
+2026-07-01 18:58:07  [OCR] INFO      ▶  ParseOCRDocument                START   job_id='46111f31c5a7a0201d15d0ef3ac879bd91dcfdb557d88ca0af07381aaefd2601'  blocks=605
+2026-07-01 18:58:07  [OCR] INFO      ✔  ParseOCRDocument                DONE   [15ms]  pages=1
+2026-07-01 18:58:07  [OCR] INFO      ▶  ResolveProcess                  START   process_type='individual_account_opening'
+2026-07-01 18:58:07  [OCR] INFO      ✔  ResolveProcess                  DONE   [0ms]  resolved='IndividualAccountOpeningProcess'
+2026-07-01 18:58:07  [OCR] INFO      ▶  StructuredExtraction            START   process_type='individual_account_opening'  pages=1  model='gemini/gemini-2.5-pro'  provider='openai'
+2026-07-01 18:58:46  [OCR] INFO      ✔  StructuredExtraction            DONE   [38.61s]  keys=['form_details', 'personal_details', 'identity_proof', 'correspondence_address', 'permanent_address', 'contact_details', 'bank_details', 'financial_information', 'depository_details', 'trading_preferences', 'gst_details', 'money_laundering_information', 'other_stock_broker_details', 'authorized_person_details', 'introducer_details', 'fatca_declaration', 'running_account_authorization', 'office_use', 'supporting_documents']
+2026-07-01 18:58:46  [OCR] INFO      ▶  StoreParsedJson                 START   process_type='individual_account_opening'  document='C:/Users/Fahar Jamadar/Downloads/page4.png'
+2026-07-01 18:58:46  [OCR] INFO      ✔  StoreParsedJson                 DONE   [464ms]  path='C:\\Users\\Fahar Jamadar\\mosfl\\mofsl_ocr_agent\\mofsl_ocr_agent\\output\\individual_account_opening\\page4.png.json'  parsed_document_path='C:\\Users\\Fahar Jamadar\\mosfl\\mofsl_ocr_agent\\mofsl_ocr_agent\\output\\individual_account_opening\\parsed\\page4.png.parsed.json'  job_id=13
+2026-07-01 18:58:46  [OCR] INFO      ▶  ReturnStructuredOutput          START   process_type='individual_account_opening'  success=True
+2026-07-01 18:58:46  [OCR] INFO      ✔  ReturnStructuredOutput          DONE   [0ms]  success=True  fields=19
+2026-07-01 18:58:46  [OCR] INFO      ======================================================================
+2026-07-01 18:58:46  [OCR] INFO        OCR PIPELINE SUCCESS   total_time=47.25s
+2026-07-01 18:58:46  [OCR] INFO        output       : C:\Users\Fahar Jamadar\mosfl\mofsl_ocr_agent\mofsl_ocr_agent\output\individual_account_opening\page4.png.json
+2026-07-01 18:58:46  [OCR] INFO      ======================================================================
+2026-07-01 19:04:02  [OCR] INFO      ======================================================================
+2026-07-01 19:04:02  [OCR] INFO        OCR PIPELINE START
+2026-07-01 19:04:02  [OCR] INFO        document     : C:/Users/Fahar Jamadar/mosfl/EKYC PDF/EBOM000589_04062026_201242.pdf
+2026-07-01 19:04:02  [OCR] INFO        process_type : individual_account_opening
+2026-07-01 19:04:02  [OCR] INFO      ======================================================================
+2026-07-01 19:04:02  [OCR] INFO      ▶  ValidateRequest                 START   document='C:/Users/Fahar Jamadar/mosfl/EKYC PDF/EBOM000589_04062026_201242.pdf'  process_type='individual_account_opening'
+2026-07-01 19:04:02  [OCR] INFO      ✔  ValidateRequest                 DONE   [0ms]  process_type='individual_account_opening'
+2026-07-01 19:04:02  [OCR] INFO      ▶  UploadToS3                      START   document='C:/Users/Fahar Jamadar/mosfl/EKYC PDF/EBOM000589_04062026_201242.pdf'  bucket='mofsl-dev'
+2026-07-01 19:04:04  [OCR] INFO      ✔  UploadToS3                      DONE   [1.93s]  s3_object_key='EBOM000589_04062026_201242.pdf'
+2026-07-01 19:04:04  [OCR] INFO      ▶  RunTextract                     START   s3_object_key='EBOM000589_04062026_201242.pdf'
+2026-07-01 19:05:04  [OCR] INFO      ✔  RunTextract                     DONE   [59.93s]  job_id='5f971038761b52417516ef860dea046940536d0910cd8ea284f9de3dcf06b486'  blocks=41187
+2026-07-01 19:05:04  [OCR] INFO      ▶  ParseOCRDocument                START   job_id='5f971038761b52417516ef860dea046940536d0910cd8ea284f9de3dcf06b486'  blocks=41187
+2026-07-01 19:05:04  [OCR] INFO      ✔  ParseOCRDocument                DONE   [107ms]  pages=61
+2026-07-01 19:05:04  [OCR] INFO      ▶  ResolveProcess                  START   process_type='individual_account_opening'
+2026-07-01 19:05:04  [OCR] INFO      ✔  ResolveProcess                  DONE   [0ms]  resolved='IndividualAccountOpeningProcess'
+2026-07-01 19:05:04  [OCR] INFO      ▶  StructuredExtraction            START   process_type='individual_account_opening'  pages=61  model='gemini/gemini-2.5-pro'  provider='openai'
+2026-07-01 19:06:06  [OCR] INFO      ✔  StructuredExtraction            DONE   [61.74s]  keys=['form_details', 'personal_details', 'identity_proof', 'correspondence_address', 'permanent_address', 'contact_details', 'bank_details', 'financial_information', 'depository_details', 'trading_preferences', 'gst_details', 'money_laundering_information', 'other_stock_broker_details', 'authorized_person_details', 'introducer_details', 'fatca_declaration', 'running_account_authorization', 'office_use', 'supporting_documents']
+2026-07-01 19:06:06  [OCR] INFO      ▶  StoreParsedJson                 START   process_type='individual_account_opening'  document='C:/Users/Fahar Jamadar/mosfl/EKYC PDF/EBOM000589_04062026_201242.pdf'
+2026-07-01 19:06:06  [OCR] INFO      ✔  StoreParsedJson                 DONE   [477ms]  path='C:\\Users\\Fahar Jamadar\\mosfl\\mofsl_ocr_agent\\mofsl_ocr_agent\\output\\individual_account_opening\\EBOM000589_04062026_201242.pdf.json'  parsed_document_path='C:\\Users\\Fahar Jamadar\\mosfl\\mofsl_ocr_agent\\mofsl_ocr_agent\\output\\individual_account_opening\\parsed\\EBOM000589_04062026_201242.pdf.parsed.json'  job_id=14
+2026-07-01 19:06:06  [OCR] INFO      ▶  ReturnStructuredOutput          START   process_type='individual_account_opening'  success=True
+2026-07-01 19:06:06  [OCR] INFO      ✔  ReturnStructuredOutput          DONE   [0ms]  success=True  fields=19
+2026-07-01 19:06:06  [OCR] INFO      ======================================================================
+2026-07-01 19:06:06  [OCR] INFO        OCR PIPELINE SUCCESS   total_time=124.48s
+2026-07-01 19:06:06  [OCR] INFO        output       : C:\Users\Fahar Jamadar\mosfl\mofsl_ocr_agent\mofsl_ocr_agent\output\individual_account_opening\EBOM000589_04062026_201242.pdf.json
+2026-07-01 19:06:06  [OCR] INFO      ======================================================================
+2026-07-01 19:28:37  [OCR] INFO      ======================================================================
+2026-07-01 19:28:37  [OCR] INFO        OCR PIPELINE START
+2026-07-01 19:28:37  [OCR] INFO        document     : C:/Users/Fahar Jamadar/Downloads/AYJB1732(1).pdf
+2026-07-01 19:28:37  [OCR] INFO        process_type : individual_account_opening
+2026-07-01 19:28:37  [OCR] INFO      ======================================================================
+2026-07-01 19:28:38  [OCR] INFO      ▶  ValidateRequest                 START   document='C:/Users/Fahar Jamadar/Downloads/AYJB1732(1).pdf'  process_type='individual_account_opening'
+2026-07-01 19:28:38  [OCR] INFO      ✔  ValidateRequest                 DONE   [0ms]  process_type='individual_account_opening'
+2026-07-01 19:28:38  [OCR] INFO      ▶  UploadToS3                      START   document='C:/Users/Fahar Jamadar/Downloads/AYJB1732(1).pdf'  bucket='mofsl-dev'
+2026-07-01 19:28:40  [OCR] INFO      ✔  UploadToS3                      DONE   [2.19s]  s3_object_key='AYJB1732(1).pdf'
+2026-07-01 19:28:40  [OCR] INFO      ▶  RunTextract                     START   s3_object_key='AYJB1732(1).pdf'
+2026-07-01 19:29:28  [OCR] INFO      ✔  RunTextract                     DONE   [48.40s]  job_id='3f22dbd3496fb44b69dbdc4d803111f7147e18c8750339f8b82e6952878f1a27'  blocks=34397
+2026-07-01 19:29:28  [OCR] INFO      ▶  ParseOCRDocument                START   job_id='3f22dbd3496fb44b69dbdc4d803111f7147e18c8750339f8b82e6952878f1a27'  blocks=34397
+2026-07-01 19:29:28  [OCR] INFO      ✔  ParseOCRDocument                DONE   [67ms]  pages=52
+2026-07-01 19:29:28  [OCR] INFO      ▶  ResolveProcess                  START   process_type='individual_account_opening'
+2026-07-01 19:29:28  [OCR] INFO      ✔  ResolveProcess                  DONE   [0ms]  resolved='IndividualAccountOpeningProcess'
+2026-07-01 19:29:28  [OCR] INFO      ▶  StructuredExtraction            START   process_type='individual_account_opening'  pages=52  model='gemini/gemini-2.5-pro'  provider='openai'
+2026-07-01 19:30:43  [OCR] ERROR     ✘  StructuredExtraction            ERROR  [74.21s]  error='Pydantic validation failed\n  error=1 validation error for IndividualAccountOpeningData\n  Invalid JSON: EOF while parsing an object at line 99 column 3 [type=json_invalid, input_value=\'{\\n  "form_details": {\\n..._information": "-"\\n  }\', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid\n  raw_content_preview=\'```json\\n{\\n  "form_details": {\\n    "form_number": "71426964",\\n    "application_number": "CKCF0111264135",\\n    "kyc_number": null,\\n    "application_type": "New",\\n    "kyc_mode": "Normal",\\n    "dp_type": "CDSL",\\n    "branch_code": null,\\n    "branch_prefix": null,\\n    "sub_broker_code": null,\\n    "ucc_code": "AYJB1732",\\n    "client_code": "AVJB1732",\\n    "dp_internal_reference_number": "0048917812",\\n    "cdsl_dp_id": "120109",\\n    "nsdl_dp_id": "IN301862"\\n  },\\n  "personal_details": {\\n    "first_name": "Nikhil",\\n    "middle_name": "Rajesh",\\n    "last_name": "Bajaj",\\n    "maiden_name": null,\\n    "father_spouse_name": "RAJESH BAJAJ",\\n    "mother_name": null,\\n    "date_of_birth": "05/02/1997",\\n    "gender": "Male",\\n    "marital_status": "Single",\\n    "nationality": "Indian",\\n    "residential_status": "Resident Individual",\\n    "pan_number": "CGPPB0236C",\\n    "photo_present": true,\\n    "signature_present": true\\n  },\\n  "identity_proof": {\\n    "proof_type": "Aadhaar Card",\\n    "identification_num\''

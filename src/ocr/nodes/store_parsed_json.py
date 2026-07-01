@@ -23,6 +23,7 @@ class StoreParsedJsonNode:
         document: str = state.get("document", "document")
         process_type: str = state.get("process_type", "unknown")
         extracted_data: Dict[str, Any] = state.get("extracted_data") or {}
+        parsed_document: Dict[str, Any] = state.get("parsed_document") or {}
         thread_id: str = state.get("thread_id", "unknown")
         s3_object_key: Optional[str] = state.get("s3_object_key")
         textract_job_id: Optional[str] = state.get("textract_job_id")
@@ -51,6 +52,17 @@ class StoreParsedJsonNode:
             step_error("StoreParsedJson", str(exc), elapsed=t.elapsed())
             raise
 
+        parsed_document_path: Optional[str] = None
+        if parsed_document:
+            try:
+                parsed_document_path = await self._storage.save_parsed_document(
+                    parsed_document=parsed_document,
+                    process_type=process_type,
+                    document_name=document,
+                )
+            except Exception as exc:
+                step_warn("StoreParsedJson", f"failed to save parsed document — {exc}")
+
         if ocr_job_id is not None:
             await self._complete_job(ocr_job_id, parsed_json_path)
 
@@ -58,6 +70,7 @@ class StoreParsedJsonNode:
             "StoreParsedJson",
             elapsed=t.elapsed(),
             path=parsed_json_path,
+            parsed_document_path=parsed_document_path,
             job_id=ocr_job_id,
         )
 
@@ -68,6 +81,7 @@ class StoreParsedJsonNode:
             "metadata": {
                 **state.get("metadata", {}),
                 "parsed_json_path": parsed_json_path,
+                "parsed_document_path": parsed_document_path,
                 "ocr_job_id": ocr_job_id,
             },
         }

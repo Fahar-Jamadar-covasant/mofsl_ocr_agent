@@ -1,0 +1,202 @@
+```json
+{
+  "form_details": {
+    "form_number": "EKYC ACOP Individual Version 9.1",
+    "application_number": null,
+    "kyc_number": null,
+    "application_type": "New KYC",
+    "kyc_mode": "Digilocker",
+    "dp_type": "CDSL",
+    "branch_code": null,
+    "branch_prefix": null,
+    "sub_broker_code": null,
+    "ucc_code": "EBOM000589",
+    "client_code": "EBOM000589",
+    "dp_internal_reference_number": null,
+    "cdsl_dp_id": "120109",
+    "nsdl_dp_id": "IN301862"
+  },
+  "personal_details": {
+    "first_name": "SATRAM",
+    "middle_name": null,
+    "last_name": null,
+    "maiden_name": null,
+    "father_spouse_name": "LEELO",
+    "mother_name": null,
+    "date_of_birth": "01-02-2004",
+    "gender": "Male",
+    "marital_status": "Single",
+    "nationality": "Indian",
+    "residential_status": "Resident Individual",
+    "pan_number": "PUIPS7267C",
+    "photo_present": false,
+    "signature_present": true
+  },
+  "identity_proof": {
+    "proof_type": "A - Aadhaar Card XXXXXX3890",
+    "identification_number": null,
+    "passport_number": null,
+    "passport_expiry_date": null,
+    "driving_license_number": null,
+    "driving_license_expiry_date": null,
+    "voter_id_number": null,
+    "aadhaar_number": "XXXXXX3890",
+    "aadhaar_offline_verification": false,
+    "ekyc_authentication": false,
+    "nrega_job_card_number": null,
+    "npr_number": null,
+    "other_document_type": null,
+    "other_document_number": null
+  },
+  "correspondence_address": {
+    "address_line_1": "NIMITTEKAM NAGAR JHANWAR",
+    "address_line_2": "ROAD GANGANA BORANADA",
+    "address_line_3": "GANGANA JODHPUR RAJASTHAN INDIA 342012",
+    "city": "Jodhpur",
+    "district": "Jodhpur",
+    "state": "Rajasthan",
+    "country": "India",
+    "pin_code": "342012",
+    "address_type": "Residential"
+  },
+  "permanent_address": {
+    "address_line_1": "NIMITTEKAM NAGAR JHANWAR",
+    "address_line_2": "ROAD GANGANA BORANADA",
+    "address_line_3": "GANGANA JODHPUR RAJASTHAN INDIA 342012",
+    "city": "Jodhpur",
+    "district": "Jodhpur",
+    "state": "Rajasthan",
+    "country": "India",
+    "pin_code": "342012",
+    "address_type": "Residential",
+    "same_as_correspondence": false
+  },
+  "contact_details": {
+    "email": "KSATRAM63@GMAIL.COM",
+    "mobile_number": "6367483490",
+    "office_phone": null,
+    "residence_phone": null
+  },
+  "bank_details": {
+    "bank_name": "STATE BANK OF INDIA",
+    "branch_name": "NA",
+    "branch_address": "E 69 BORANADA INDUSTRIAL AREAPHASE 1BARMER ROAD",
+    "account_number": "00000041675247956",
+    "account_type": "Savings",
+    "micr_code": "342002067",
+    "ifsc_code": "SBIN0031913",
+    "internet_banking_enabled": true,
+    "proof_of_bank": null
+  },
+  "financial_information": {
+    "gross_annual_income": "1-5 Lac",
+    "net_worth": null,
+    "net_worth_date": null,
+    "occupation": "Private Sector Service",
+    "other_income_source": null,
+    "pep_status": false,
+    "related_to_pep": false,
+    "other_information": null
+  },
+  "depository_details": {
+    "depository_name": "CDSL",
+    "dp_id": "120109",
+    "beneficiary_id": "0047831865",
+    "beneficiary_name": null,
+    "second_holder_name": null,
+    "third_holder_name": null,
+    "proof_of_dp": null
+  },
+  "trading_preferences": {
+    "exchange_segments": [
+      "Cash / Mutual Fund"
+    ],
+    "commodity_segments": [],
+    "internet_trading": true,
+    "mobile_trading": true,
+    "communication_mode": "in Electronic Form (Email id same as mentioned on KRA Page)",
+    "years_in_stocks": "1",
+    "years_in_derivatives": "0",
+    "years_in_commodities": "0",
+    "years_in_other_investments": "0",
+    "no_prior_experience": false,
+    "equity_trading_preference": [
+      "Intraday",
+      "Investment"
+    ],
+    "derivative_trading_preference": [],
+    "educational_qualification": "Graduate"
+  },
+  "gst_details": {
+    "gst_number": null,
+    "gst_location": null,
+    "gst_validity_date": null
+  },
+  "money_laundering_information": {
+    "fund_source": null,
+    "non_profit_organization": null,
+    "past_actions": "NIL"
+  },
+  "other_stock_broker_details": {
+    "stock_broker_name": null,
+    "client_code": null,
+    "authorized_person": null,
+    "exchange": null,
+    "pending_disputes": null
+  },
+  "authorized_person_details": {
+    "registration_number": null,
+    "authorized_person_name": null,
+    "registered_office_address": null,
+    "website": null,
+    "phone_number": null,
+    "fax_number": null
+  },
+  "introducer_details": {
+    "introducer_name": null,
+    "introducer_address": null,
+    "introducer_status": null,
+    "introducer_phone": null,
+    "introducer_signature_present": false
+  },
+  "fatca_declaration": {
+    "country_of_birth_outside_india": false,
+    "tax_resident_outside_india": false,
+    "citizenship_other_than_india": false,
+    "foreign_address_or_phone": false
+  },
+  "running_account_authorization": {
+    "authorized": true,
+    "settlement_frequency": "Quarterly"
+  },
+  "office_use": {
+    "organization_name": "Motilal Oswal Financial Services Limited",
+    "employee_name": "Tejashree Vedpathak",
+    "employee_designation": "EXECUTIVE",
+    "employee_code": null,
+    "ipv_date": "04-06-2026",
+    "pan_verification_date": "04-06-2026",
+    "amc_code": "1100010900",
+    "cersai_code": "IN0269",
+    "employee_signature_present": false
+  },
+  "supporting_documents": {
+    "aadhaar": {
+      "masked_number": "xxxxxxxx3890",
+      "name": "Satram",
+      "date_of_birth": "01/02/2004",
+      "gender": "Male",
+      "care_of": "C/O: Leelo",
+      "address": "nimittekam nagar jhanwar road Gangana Jodhpur Rajasthan India gangana boranada 342012",
+      "landmark": "nimittekam nagar",
+      "locality": "jhanwar road gangana boranada",
+      "city": "Gangana",
+      "district": "Jodhpur",
+      "state": "Rajasthan",
+      "pin_code": "342012",
+      "generation_date": "2026-06-01T18:15:13.656+05:30",
+      "download_date": "2026-06-01T18:15:13.656+05:30"
+    }
+  }
+}
+```
